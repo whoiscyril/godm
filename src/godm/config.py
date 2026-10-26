@@ -84,10 +84,9 @@ def _parse_config(config_path: Path) -> dict:
                 x, y, z = map(float, tokens[2:5])
                 at = Atom(
                     label=tokens[0],
-                    kind=tokens[1],
+                    kind=normalise_core_shell(tokens[1]),
                     position=(x, y, z),
                 )
-                _normalise_core_shell(at)
                 atoms.append(at)
 
         vals["options"] = options
@@ -177,13 +176,13 @@ def _parse_control(
     return vals
 
 
-def _normalise_core_shell(atom: Atom):
+
+def normalise_core_shell(kind: str):
     "Helper function that normalise different core/shell representations in GULP inputs and outputs"
-    kind = atom.kind.lower()
-    if kind in _CORE_REP:
-        atom.kind = "core"
-    elif kind in _SHELL_REP:
-        atom.kind = "shell"
-    else:
-        raise ValueError("Unknown atom type: check core/shell representation")
-    return atom
+    kind = kind.lower()
+    if kind in  _CORE_REP:
+        return "core"
+    if kind in _SHELL_REP:
+        return "shell"
+    raise ValueError("Unknown atom type: check core/shell representation")
+
