@@ -27,8 +27,6 @@ def read_inputs() -> tuple[Settings, Structure]:
 
     settings = Settings(**settings_vals)
     structure = Structure(cell=config_vals["cell"], atoms=config_vals["atoms"])
-    print(settings)
-    print(structure)
     return (settings, structure)
 
 
