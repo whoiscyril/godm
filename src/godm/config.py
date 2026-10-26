@@ -152,7 +152,7 @@ def _parse_control(
             vals["rq_steps"] = steps
         elif tokens[0] == "GULP_EXE":
             _, p = shlex.split(line)
-            vals["gulp_path"] = p
+            vals["gulp_path"] = Path(p).resolve()
         elif tokens[0] == "LIBRARY":
             _, p = shlex.split(line)
             vals["library_path"] = (input_dir / p).resolve()
