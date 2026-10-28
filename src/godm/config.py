@@ -3,9 +3,6 @@ from pathlib import Path
 
 from .models import Atom, Defect, Settings, Structure
 
-_CORE_REP = ["cor", "c", "core"]
-_SHELL_REP = ["shel", "she", "s", "shell"]
-
 
 def read_inputs() -> tuple[Settings, Structure]:
     "Read input/CONTROL and input/CONFIG and return settings plus the crystal."
@@ -123,6 +120,12 @@ def _parse_control(
                 defects.append(Defect(kind, label=tokens[1], host=tokens[2]))
             elif kind in {"interstitial", "vacancy"} and len(tokens) == 2:
                 defects.append(Defect(kind, label=tokens[1]))
+        if tokens[0] == "LAUNCHER":
+            vals["launcher"] = tokens[-1].lower()
+        if tokens[0] == "NUM_WORKERS":
+            vals["num_workers"] = int(tokens[-1])
+        if tokens[0] == "NCPUS":
+            vals["ncpus"] = int(tokens[-1])
 
         if tokens[0] == "ML_SIZE":
             try:
@@ -174,15 +177,3 @@ def _parse_control(
     vals["defects"] = defects
 
     return vals
-
-
-
-def normalise_core_shell(kind: str):
-    "Helper function that normalise different core/shell representations in GULP inputs and outputs"
-    kind = kind.lower()
-    if kind in  _CORE_REP:
-        return "core"
-    if kind in _SHELL_REP:
-        return "shell"
-    raise ValueError("Unknown atom type: check core/shell representation")
-
