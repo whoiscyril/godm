@@ -1,0 +1,18 @@
+[project]
+name = "godm"
+version = "0.1.0"
+description = "Global Optimisation of Defect Energy Landscape with Mott-Littleton"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.4",
+    "pytest>=9.2.0",
+    "ruff>=0.17.1",
+]
+
+[project.scripts]
+godm = "godm.main:main"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
