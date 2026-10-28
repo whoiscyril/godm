@@ -38,6 +38,9 @@ class Settings:
         rq_steps: int,
         gulp_path: Path | None,
         library_path: Path,
+        num_workers: int,
+        ncpus: int,
+        launcher: str,
         mlcutoffs: tuple[float, float],
         r0cutoff: float,
         centre_fractional: Position,
@@ -59,6 +62,9 @@ class Settings:
         self.defects = defects
         self.options = options
         self.keywords = keywords
+        self.launcher = launcher
+        self.ncpus = ncpus
+        self.num_workers = num_workers
 
     def __str__(self) -> str:
         options = "\n".join("    " + line.rstrip("\r\n") for line in self.options)
@@ -118,7 +124,8 @@ class GulpOutput:
         has_bad_energy: bool = False,
         lattice_energy: float | None = None,
         defect_energy: float | None = None,
-        gnorm: float | None = None,
+        defect_gnorm: float | None = None,
+        lattice_gnorm: float | None = None,
         cpu_time: float | None = None,
         cell: Cell | None = None,
         atoms: list[Atom] | None = None,
@@ -131,7 +138,8 @@ class GulpOutput:
         self.has_bad_energy = has_bad_energy
         self.lattice_energy = lattice_energy
         self.defect_energy = defect_energy
-        self.gnorm = gnorm
+        self.lattice_gnorm = lattice_gnorm
+        self.defect_gnorm = defect_gnorm
         self.cpu_time = cpu_time
         self.cell = cell
         self.atoms = atoms
