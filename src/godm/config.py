@@ -2,6 +2,7 @@ import shlex
 from pathlib import Path
 
 from .models import Atom, Defect, Settings, Structure
+from .helpers import normalise_core_shell
 
 
 def read_inputs() -> tuple[Settings, Structure]:
